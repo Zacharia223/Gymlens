@@ -307,6 +307,12 @@ ul  { list-style: none; }
 
 /* form primitives — reusable across all forms in the app */
 .form-group { margin-bottom: 1.1rem; }
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .9rem;
+}
+@media (max-width: 420px) { .form-row-2 { grid-template-columns: 1fr; gap: 0; } }
 .form-label {
     display: block;
     font-size: .85rem;
