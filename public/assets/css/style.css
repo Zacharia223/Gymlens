@@ -259,3 +259,94 @@ ul  { list-style: none; }
         padding: 0 var(--space) 1.25rem;
     }
 }
+
+/* ============================================================
+   Auth pages (login / register) — matches wireframe screen 1
+   ============================================================ */
+.auth-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background:
+        radial-gradient(55% 60% at 85% 0%, rgba(255, 87, 34, 0.16), transparent 60%),
+        radial-gradient(45% 55% at 0% 100%, rgba(33, 192, 122, 0.10), transparent 60%);
+}
+
+/* minimal top bar — just the brand, like the wireframe */
+.auth-topbar { padding: 1.5rem var(--space); }
+.auth-topbar .brand { font-size: 1.2rem; }
+
+.auth-main {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    padding: 1rem var(--space) 3rem;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.auth-card h1 {
+    text-align: center;
+    font-size: 1.7rem;
+    letter-spacing: -.02em;
+}
+.auth-card .auth-sub {
+    text-align: center;
+    color: var(--color-muted);
+    margin-top: .35rem;
+    margin-bottom: 1.75rem;
+}
+
+/* form primitives — reusable across all forms in the app */
+.form-group { margin-bottom: 1.1rem; }
+.form-label {
+    display: block;
+    font-size: .85rem;
+    color: var(--color-muted);
+    margin-bottom: .4rem;
+}
+.form-input {
+    width: 100%;
+    padding: .8rem .9rem;
+    font-size: .95rem;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+.form-input::placeholder { color: #5b6672; }
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.18);
+}
+
+.form-row-end { display: flex; justify-content: flex-end; margin-top: -.4rem; margin-bottom: 1.25rem; }
+.form-link { color: var(--color-primary); font-size: .85rem; font-weight: 500; }
+.form-link:hover { text-decoration: underline; }
+
+.btn-block { width: 100%; justify-content: center; padding-block: .9rem; }
+
+.auth-foot { text-align: center; color: var(--color-muted); font-size: .9rem; margin-top: 1.5rem; }
+.auth-foot a { color: var(--color-primary); font-weight: 600; }
+.auth-foot a:hover { text-decoration: underline; }
+
+/* inline form feedback (for when backend auth is wired up) */
+.form-alert {
+    background: rgba(255, 87, 34, 0.12);
+    border: 1px solid rgba(255, 87, 34, 0.4);
+    color: #ffb59c;
+    border-radius: var(--radius-sm);
+    padding: .7rem .9rem;
+    font-size: .88rem;
+    margin-bottom: 1.25rem;
+}
