@@ -1,12 +1,5 @@
 <?php
-/**
- * Gymlens — Login page
- * Matches wireframe screen 1 (Welcome back / Sign in to continue).
- *
- * Frontend only for now: the form posts back to this page. Backend
- * authentication (validate against the users table, start a session,
- * redirect to the dashboard) will be wired in includes/auth.php later.
- */
+
 if (!defined('BASE_URL')) {
     define('BASE_URL', '/Gymlens/public');
 }

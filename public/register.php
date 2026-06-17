@@ -1,11 +1,4 @@
 <?php
-/**
- * Gymlens — Register page
- * Mirrors the login card; collects the fields from the users table
- * (first_name, last_name, email, phone, password_hash → role defaults
- * to "member"). Frontend only for now — account creation will be wired
- * in includes/auth.php later.
- */
 if (!defined('BASE_URL')) {
     define('BASE_URL', '/Gymlens/public');
 }
@@ -36,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="auth-main">
         <div class="auth-card">
             <h1>Create your account</h1>
-            <p class="auth-sub">Join Gymlens in a few seconds</p>
+            <p class="auth-sub">Join Gymlens </p>
 
             <?php if ($error): ?>
                 <div class="form-alert"><?= htmlspecialchars($error) ?></div>
