@@ -8,7 +8,7 @@ require_once __DIR__ . '/db_config.php'; // $DB
 
 try {
     $conn = new PDO(
-        "mysql:host={$DB['host']};dbname={$DB['name']};charset=utf8",
+        "mysql:host={$DB['host']};port={$DB['port']};dbname={$DB['name']};charset=utf8",
         $DB['user'],
         $DB['password']
     );

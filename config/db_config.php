@@ -8,7 +8,8 @@
  */
 
 $DB = [
-    'host'     => 'localhost',
+    'host'     => '127.0.0.1',
+    'port'     => 3306,        // change if your MySQL runs on a different port
     'name'     => 'gym_lens',
     'user'     => 'root',
     'password' => '1234',

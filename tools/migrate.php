@@ -16,7 +16,7 @@ $nl  = $cli ? "\n" : "<br>";
 
 // Step 1: make sure the database itself exists (connect without selecting one).
 try {
-    $server = new PDO("mysql:host={$DB['host']};charset=utf8", $DB['user'], $DB['password']);
+    $server = new PDO("mysql:host={$DB['host']};port={$DB['port']};charset=utf8", $DB['user'], $DB['password']);
     $server->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $server->exec("CREATE DATABASE IF NOT EXISTS `{$DB['name']}`
                    CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
@@ -27,7 +27,7 @@ try {
 
 // Step 2: connect to the (now guaranteed) database to build the tables.
 $conn = new PDO(
-    "mysql:host={$DB['host']};dbname={$DB['name']};charset=utf8",
+    "mysql:host={$DB['host']};port={$DB['port']};dbname={$DB['name']};charset=utf8",
     $DB['user'],
     $DB['password']
 );
