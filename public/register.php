@@ -11,17 +11,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $first   = trim($_POST['first_name'] ?? '');
     $last    = trim($_POST['last_name'] ?? '');
-    $email   = trim($_POST['email'] ?? '');
+    $email   = strtolower(trim($_POST['email'] ?? ''));
     $phone   = trim($_POST['phone'] ?? '');
     $pass    = $_POST['password'] ?? '';
     $confirm = $_POST['confirm_password'] ?? '';
 
+    // --- Validation ---
+    $name_pattern = "/^[A-Za-z][A-Za-z '\\-]{1,49}$/"; // letters, space, apostrophe, hyphen
+
     if ($first === '' || $last === '' || $email === '' || $pass === '') {
         $error = 'Please fill in all the required fields.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    } elseif (!preg_match($name_pattern, $first) || !preg_match($name_pattern, $last)) {
+        $error = 'Names should be 2–50 letters (letters, spaces, apostrophes or hyphens only).';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 50) {
         $error = 'Please enter a valid email address.';
+    } elseif ($phone !== '' && !preg_match('/^\+?[0-9 ]{7,20}$/', $phone)) {
+        $error = 'Please enter a valid phone number, or leave it blank.';
     } elseif (strlen($pass) < 8) {
-        $error = 'Password must be at least 8 characters.';
+        $error = 'Password must be at least 8 characters long.';
+    } elseif (!preg_match('/[A-Z]/', $pass)
+           || !preg_match('/[a-z]/', $pass)
+           || !preg_match('/[0-9]/', $pass)) {
+        $error = 'Password must include an uppercase letter, a lowercase letter and a number.';
     } elseif ($pass !== $confirm) {
         $error = 'Passwords don’t match.';
     } else {
@@ -82,18 +93,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-alert"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 
-            <form method="post" action="<?= BASE_URL ?>/register.php" novalidate>
+            <form method="post" action="<?= BASE_URL ?>/register.php">
                 <div class="form-row-2">
                     <div class="form-group">
                         <label class="form-label" for="first_name">First name</label>
                         <input class="form-input" type="text" id="first_name" name="first_name"
                                placeholder="Zacharia" autocomplete="given-name"
+                               minlength="2" maxlength="50" pattern="[A-Za-z][A-Za-z '\-]{1,49}"
+                               title="2–50 letters; spaces, apostrophes or hyphens allowed"
                                value="<?= htmlspecialchars($_POST['first_name'] ?? '') ?>" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="last_name">Last name</label>
                         <input class="form-input" type="text" id="last_name" name="last_name"
                                placeholder="Ogega" autocomplete="family-name"
+                               minlength="2" maxlength="50" pattern="[A-Za-z][A-Za-z '\-]{1,49}"
+                               title="2–50 letters; spaces, apostrophes or hyphens allowed"
                                value="<?= htmlspecialchars($_POST['last_name'] ?? '') ?>" required>
                     </div>
                 </div>
@@ -101,7 +116,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label class="form-label" for="email">Email</label>
                     <input class="form-input" type="email" id="email" name="email"
-                           placeholder="you@strathmore.edu" autocomplete="email"
+                           placeholder="you@strathmore.edu" autocomplete="email" maxlength="50"
+                           title="Enter a valid email address, e.g. you@strathmore.edu"
                            value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
                 </div>
 
@@ -109,13 +125,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label class="form-label" for="phone">Phone <span style="opacity:.6">(optional)</span></label>
                     <input class="form-input" type="tel" id="phone" name="phone"
                            placeholder="+254 7xx xxx xxx" autocomplete="tel"
+                           pattern="\+?[0-9 ]{7,20}" title="7–20 digits; an optional leading + is allowed"
                            value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="password">Password</label>
                     <input class="form-input" type="password" id="password" name="password"
-                           placeholder="At least 8 characters" autocomplete="new-password" required>
+                           placeholder="At least 8 characters" autocomplete="new-password"
+                           minlength="8" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}"
+                           title="At least 8 characters, with an uppercase letter, a lowercase letter and a number"
+                           required>
+                    <p class="form-hint">At least 8 characters, including an uppercase letter, a lowercase letter and a number.</p>
                 </div>
 
                 <div class="form-group">

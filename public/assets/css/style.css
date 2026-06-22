@@ -398,6 +398,8 @@ ul  { list-style: none; }
     box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.18);
 }
 
+.form-hint { color: var(--color-muted); font-size: .78rem; margin-top: .4rem; }
+
 .form-row-end { display: flex; justify-content: flex-end; margin-top: -.4rem; margin-bottom: 1.25rem; }
 .form-link { color: var(--color-primary); font-size: .85rem; font-weight: 500; }
 .form-link:hover { text-decoration: underline; }
