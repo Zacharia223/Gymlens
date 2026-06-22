@@ -1,16 +1,28 @@
 <?php
+require_once __DIR__ . '/../includes/bootstrap.php';
 
-if (!defined('BASE_URL')) {
-    define('BASE_URL', '/Gymlens/public');
+// already signed in? go straight to your dashboard
+if (is_logged_in()) {
+    redirect(home_for_role(current_role()));
 }
 
-$error = '';
+// consume any flash (e.g. "you don't have access to that page") so it
+// shows here once and doesn't carry over to the next page.
+$flash = take_flash();
+$error = $flash && $flash['type'] === 'error' ? $flash['message'] : '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // TODO: replace with real authentication (includes/auth.php)
-    // $email = trim($_POST['email'] ?? '');
-    // $password = $_POST['password'] ?? '';
-    // ... validate, then header('Location: '.BASE_URL.'/member/dashboard.php');
-    $error = 'Login isn’t connected to the database yet — coming next.';
+    require_once __DIR__ . '/../config/database.php'; // $conn
+    $email    = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    if ($email === '' || $password === '') {
+        $error = 'Please enter your email and password.';
+    } elseif (login_user($conn, $email, $password)) {
+        redirect(home_for_role(current_role()));
+    } else {
+        $error = 'Incorrect email or password.';
+    }
 }
 ?>
 <!DOCTYPE html>

@@ -1,13 +1,60 @@
 <?php
-if (!defined('BASE_URL')) {
-    define('BASE_URL', '/Gymlens/public');
+require_once __DIR__ . '/../includes/bootstrap.php';
+
+if (is_logged_in()) {
+    redirect(home_for_role(current_role()));
 }
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // TODO: validate + insert into users (includes/auth.php), then
-    // header('Location: '.BASE_URL.'/login.php');
-    $error = 'Sign-up isn’t connected to the database yet — coming next.';
+    require_once __DIR__ . '/../config/database.php'; // $conn
+
+    $first   = trim($_POST['first_name'] ?? '');
+    $last    = trim($_POST['last_name'] ?? '');
+    $email   = trim($_POST['email'] ?? '');
+    $phone   = trim($_POST['phone'] ?? '');
+    $pass    = $_POST['password'] ?? '';
+    $confirm = $_POST['confirm_password'] ?? '';
+
+    if ($first === '' || $last === '' || $email === '' || $pass === '') {
+        $error = 'Please fill in all the required fields.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = 'Please enter a valid email address.';
+    } elseif (strlen($pass) < 8) {
+        $error = 'Password must be at least 8 characters.';
+    } elseif ($pass !== $confirm) {
+        $error = 'Passwords don’t match.';
+    } else {
+        try {
+            $exists = db_one($conn, 'SELECT user_id FROM User WHERE email = ?', [$email]);
+            if ($exists) {
+                $error = 'An account with that email already exists.';
+            } else {
+                // New sign-ups are always members.
+                $conn->beginTransaction();
+                $stmt = $conn->prepare(
+                    'INSERT INTO User (first_name, last_name, email, password_hash, phone, role)
+                     VALUES (?, ?, ?, ?, ?, "member")'
+                );
+                $stmt->execute([$first, $last, $email, password_hash($pass, PASSWORD_DEFAULT), $phone]);
+                $userId = (int) $conn->lastInsertId();
+                $conn->prepare(
+                    'INSERT INTO members (member_id, membership_type, join_date, expiry_date, status)
+                     VALUES (?, "basic", CURDATE(), DATE_ADD(CURDATE(), INTERVAL 1 YEAR), "active")'
+                )->execute([$userId]);
+                $conn->commit();
+
+                login_user($conn, $email, $pass);
+                flash('Welcome to Gymlens, ' . $first . '!');
+                redirect(home_for_role('member'));
+            }
+        } catch (PDOException $e) {
+            if ($conn->inTransaction()) {
+                $conn->rollBack();
+            }
+            $error = 'Could not create your account. Is the database set up? (run tools/migrate.php)';
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
