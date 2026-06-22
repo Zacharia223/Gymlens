@@ -78,36 +78,42 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
 
         <div class="grid-cards">
-            <article class="card">
+            <a class="card" href="<?= BASE_URL ?>/admin/users.php">
                 <div class="icon">👥</div>
                 <h3>Member management</h3>
                 <p>Sign-ups, profiles, memberships and renewals — track every member's journey from day one.</p>
-            </article>
-            <article class="card">
+                <span class="card-link">Open Members →</span>
+            </a>
+            <a class="card" href="<?= BASE_URL ?>/trainer/sessions.php">
                 <div class="icon">🏋️</div>
                 <h3>Trainers &amp; classes</h3>
                 <p>Assign trainers, manage schedules and let members book sessions in a couple of taps.</p>
-            </article>
-            <article class="card">
+                <span class="card-link">Open Sessions →</span>
+            </a>
+            <a class="card" href="<?= BASE_URL ?>/member/book.php">
                 <div class="icon">📅</div>
                 <h3>Bookings</h3>
                 <p>Real-time class and equipment booking that prevents double-booking and no-shows.</p>
-            </article>
-            <article class="card">
+                <span class="card-link">Open Bookings →</span>
+            </a>
+            <a class="card" href="<?= BASE_URL ?>/member/occupancy.php">
                 <div class="icon">📊</div>
                 <h3>Live occupancy</h3>
                 <p>See exactly how busy each zone is right now, and spot your quiet and peak hours.</p>
-            </article>
-            <article class="card">
+                <span class="card-link">Open Occupancy →</span>
+            </a>
+            <a class="card" href="<?= BASE_URL ?>/notifications.php">
                 <div class="icon">🔔</div>
                 <h3>Notifications</h3>
                 <p>Automatic reminders for renewals, bookings and announcements keep members in the loop.</p>
-            </article>
-            <article class="card">
+                <span class="card-link">Open Notifications →</span>
+            </a>
+            <a class="card" href="<?= BASE_URL ?>/admin/reports.php">
                 <div class="icon">📈</div>
                 <h3>Reports</h3>
                 <p>Revenue, attendance and growth insights so you can make decisions with confidence.</p>
-            </article>
+                <span class="card-link">Open Reports →</span>
+            </a>
         </div>
     </div>
 </section>

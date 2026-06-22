@@ -36,11 +36,14 @@ $active     = $active ?? '';
             <ul class="nav-links">
                 <li><a href="<?= BASE_URL ?>/index.php#features"<?= $active === 'features' ? ' style="color:var(--color-text)"' : '' ?>>Features</a></li>
 
-                <li class="nav-dropdown">
-                    <a href="#" class="nav-drop-toggle" aria-haspopup="true">Pages ▾</a>
-                    <div class="nav-drop-menu">
-                        <div class="nav-drop-col">
-                            <span class="nav-drop-head">Member</span>
+                <li class="nav-menu">
+                    <button type="button" class="nav-menu-btn"
+                            onclick="document.getElementById('pageMenu').classList.toggle('open')">
+                        Menu ▾
+                    </button>
+                    <div class="nav-menu-panel" id="pageMenu">
+                        <div class="nav-menu-col">
+                            <span class="nav-menu-head">Member</span>
                             <a href="<?= BASE_URL ?>/member/dashboard.php">Dashboard</a>
                             <a href="<?= BASE_URL ?>/member/occupancy.php">Live occupancy</a>
                             <a href="<?= BASE_URL ?>/member/book.php">Book a session</a>
@@ -48,16 +51,16 @@ $active     = $active ?? '';
                             <a href="<?= BASE_URL ?>/member/checkin.php">Check in</a>
                             <a href="<?= BASE_URL ?>/member/checkout.php">Check out</a>
                         </div>
-                        <div class="nav-drop-col">
-                            <span class="nav-drop-head">Trainer</span>
+                        <div class="nav-menu-col">
+                            <span class="nav-menu-head">Trainer</span>
                             <a href="<?= BASE_URL ?>/trainer/dashboard.php">Dashboard</a>
                             <a href="<?= BASE_URL ?>/trainer/sessions.php">Sessions</a>
                             <a href="<?= BASE_URL ?>/trainer/programs.php">Programs</a>
-                            <span class="nav-drop-head" style="margin-top:.75rem">General</span>
+                            <span class="nav-menu-head" style="margin-top:.75rem">General</span>
                             <a href="<?= BASE_URL ?>/notifications.php">Notifications</a>
                         </div>
-                        <div class="nav-drop-col">
-                            <span class="nav-drop-head">Admin</span>
+                        <div class="nav-menu-col">
+                            <span class="nav-menu-head">Admin</span>
                             <a href="<?= BASE_URL ?>/admin/dashboard.php">Dashboard</a>
                             <a href="<?= BASE_URL ?>/admin/occupancy.php">Occupancy</a>
                             <a href="<?= BASE_URL ?>/admin/users.php">Users</a>
