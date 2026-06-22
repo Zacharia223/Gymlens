@@ -9,10 +9,29 @@
  * or open it once in the browser: http://localhost/Gymlens/tools/migrate.php
  */
 
-require_once __DIR__ . '/../config/database.php'; // provides $conn (PDO)
+require_once __DIR__ . '/../config/db_config.php'; // $DB
 
 $cli = (php_sapi_name() === 'cli');
 $nl  = $cli ? "\n" : "<br>";
+
+// Step 1: make sure the database itself exists (connect without selecting one).
+try {
+    $server = new PDO("mysql:host={$DB['host']};charset=utf8", $DB['user'], $DB['password']);
+    $server->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $server->exec("CREATE DATABASE IF NOT EXISTS `{$DB['name']}`
+                   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+} catch (PDOException $e) {
+    die("Could not connect to MySQL or create the database: " . $e->getMessage()
+        . " — check that MySQL is running and the credentials in config/db_config.php are correct.{$nl}");
+}
+
+// Step 2: connect to the (now guaranteed) database to build the tables.
+$conn = new PDO(
+    "mysql:host={$DB['host']};dbname={$DB['name']};charset=utf8",
+    $DB['user'],
+    $DB['password']
+);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $tables = [
 

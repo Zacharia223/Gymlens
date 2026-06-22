@@ -1,21 +1,21 @@
 <?php
+/**
+ * App database connection. Provides $conn (PDO) to whatever includes it.
+ * Credentials live in config/db_config.php so the setup tools can reuse them.
+ */
 
-$host = "localhost";
-$dbname = "gym_lens";
-$username = "root";
-$password = "1234";
+require_once __DIR__ . '/db_config.php'; // $DB
 
 try {
     $conn = new PDO(
-        "mysql:host=$host;dbname=$dbname;charset=utf8",
-        $username,
-        $password
+        "mysql:host={$DB['host']};dbname={$DB['name']};charset=utf8",
+        $DB['user'],
+        $DB['password']
     );
 
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 } catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+    die("Connection failed: " . $e->getMessage()
+        . " — is MySQL running and the database created? Try running tools/migrate.php.");
 }
-
-?>
