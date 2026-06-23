@@ -166,6 +166,19 @@ $tables = [
 
 echo "Gymlens migration{$nl}-----------------{$nl}";
 
+// Optional clean rebuild: tools/migrate.php?fresh=1  (or `php tools/migrate.php fresh`)
+// Drops the existing app tables first so their columns match the app exactly.
+// WARNING: this deletes all data in those tables.
+$fresh = isset($_GET['fresh']) || in_array('fresh', $argv ?? [], true);
+if ($fresh) {
+    echo "  ! fresh rebuild — dropping existing tables{$nl}";
+    $conn->exec('SET FOREIGN_KEY_CHECKS = 0');
+    foreach (array_keys($tables) as $name) {
+        $conn->exec("DROP TABLE IF EXISTS `{$name}`");
+    }
+    $conn->exec('SET FOREIGN_KEY_CHECKS = 1');
+}
+
 foreach ($tables as $name => $sql) {
     try {
         $conn->exec($sql);

@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         flash('Session booked! See you there.');
         redirect('/member/bookings.php');
     } catch (PDOException $e) {
-        flash('Could not book the session: ' . $e->getMessage(), 'error');
+        flash('Could not book the session. Please try again.', 'error');
         redirect('/member/book.php');
     }
 }
