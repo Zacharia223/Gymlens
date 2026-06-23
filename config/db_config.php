@@ -9,8 +9,8 @@
 
 $DB = [
     'host'     => '127.0.0.1',
-    'port'     => 3306,        // change if your MySQL runs on a different port
+    'port'     => 3306,        // change if your MySQL/MariaDB runs on a different port
     'name'     => 'gym_lens',
     'user'     => 'root',
-    'password' => 'Sokoro12',
+    'password' => '1234',
 ];
