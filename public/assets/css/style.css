@@ -553,6 +553,10 @@ ul  { list-style: none; }
 .notif.unread .notif-msg { font-weight: 600; }
 .notif-time { color: var(--color-muted); font-size: .8rem; }
 
+/* live indicator (occupancy auto-refresh) */
+.live-dot { color: var(--color-accent); animation: live-pulse 1.6s ease-in-out infinite; }
+@keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+
 @media (max-width: 860px) {
     .dash-grid { grid-template-columns: 1fr; }
     .nav-menu-panel { min-width: 0; position: static; transform: none; padding: .5rem 0 0; border: 0; }
