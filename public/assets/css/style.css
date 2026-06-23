@@ -537,6 +537,22 @@ ul  { list-style: none; }
 .badge-cancelled { border-color: rgba(255, 87, 34, 0.5);  color: #ffb59c; }
 .badge-attended  { border-color: var(--color-border); color: var(--color-muted); }
 
+/* notifications list */
+.notif {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .9rem .6rem;
+    border-bottom: 1px solid var(--color-border);
+}
+.notif:last-child { border-bottom: 0; }
+.notif.unread { border-left: 3px solid var(--color-primary); padding-left: .9rem; background: rgba(255, 87, 34, 0.05); }
+.notif-icon { font-size: 1.2rem; }
+.notif-body { flex: 1; }
+.notif-msg  { font-size: .95rem; }
+.notif.unread .notif-msg { font-weight: 600; }
+.notif-time { color: var(--color-muted); font-size: .8rem; }
+
 @media (max-width: 860px) {
     .dash-grid { grid-template-columns: 1fr; }
     .nav-menu-panel { min-width: 0; position: static; transform: none; padding: .5rem 0 0; border: 0; }

@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 )->execute([$userId]);
                 $conn->commit();
 
+                notify($conn, $userId, 'Welcome to Gymlens! 🎉 Book your first session to get started.', 'info');
                 login_user($conn, $email, $pass);
                 flash('Welcome to Gymlens, ' . $first . '!');
                 redirect(home_for_role('member'));

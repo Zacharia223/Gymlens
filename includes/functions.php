@@ -66,3 +66,17 @@ function take_flash(): ?array
     unset($_SESSION['flash']);
     return $flash;
 }
+
+/**
+ * Create a notification for a user. Best-effort: never breaks the
+ * surrounding action if the notifications table isn't there.
+ */
+function notify(PDO $conn, int $userId, string $message, string $type = 'info'): void
+{
+    try {
+        $conn->prepare('INSERT INTO notifications (user_id, message, type) VALUES (?, ?, ?)')
+             ->execute([$userId, $message, $type]);
+    } catch (PDOException $e) {
+        // ignore
+    }
+}

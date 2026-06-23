@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'cance
             "UPDATE bookings SET status = 'cancelled'
               WHERE booking_id = ? AND member_id = ? AND status = 'confirmed'"
         )->execute([$bookingId, $memberId]);
+        notify($conn, $memberId, 'Your booking has been cancelled.', 'booking');
         flash('Booking cancelled.');
     } catch (PDOException $e) {
         flash('Could not cancel that booking.', 'error');

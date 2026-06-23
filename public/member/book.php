@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "INSERT INTO bookings (member_id, session_id, status) VALUES (?, ?, 'confirmed')"
         )->execute([$memberId, $sessionId]);
 
+        notify($conn, $memberId, 'Your session booking is confirmed.', 'booking');
         flash('Session booked! See you there.');
         redirect('/member/bookings.php');
     } catch (PDOException $e) {
