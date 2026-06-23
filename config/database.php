@@ -4,6 +4,11 @@
  * Credentials live in config/db_config.php so the setup tools can reuse them.
  */
 
+if (!file_exists(__DIR__ . '/db_config.php')) {
+    die("Missing config/db_config.php — copy config/db_config.example.php to "
+        . "config/db_config.php and set your local MySQL/MariaDB password.");
+}
+
 require_once __DIR__ . '/db_config.php'; // $DB
 
 try {

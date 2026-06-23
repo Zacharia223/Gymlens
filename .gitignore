@@ -1,0 +1,3 @@
+
+# Local DB credentials — each dev keeps their own (copy from config/db_config.example.php)
+config/db_config.php
