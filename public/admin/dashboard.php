@@ -1,8 +1,5 @@
 <?php
-/**
- * Gymlens — Admin Dashboard
- * Access: admins only.
- */
+
 require_once __DIR__ . '/../../includes/bootstrap.php';
 require_role('admin');
 require_once __DIR__ . '/../../config/database.php'; // $conn
