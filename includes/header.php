@@ -24,6 +24,7 @@ $flash      = take_flash();
     <title><?= e($page_title) ?> · Gymlens</title>
     <meta name="description" content="Gymlens — smart gym management: members, trainers, bookings and live occupancy in one place.">
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
+    <link rel="icon" type="image/png" href="<?= BASE_URL ?>/assets/images/favicon.png">
 </head>
 <body>
     <nav class="navbar" id="navbar">
